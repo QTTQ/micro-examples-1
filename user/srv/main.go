@@ -5,7 +5,6 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/entere/micro-examples/user/srv/handler"
 	"github.com/entere/micro-examples/user/srv/subscriber"
-
 	user "github.com/entere/micro-examples/user/srv/proto/user"
 )
 
