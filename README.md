@@ -11,7 +11,7 @@ go-micro 微服务示例
 
 ```bash
 cd micro-examples
-go mod init io.github.entere
+go mod init github.com/entere/micro-examples
 
 ```
 
@@ -93,6 +93,11 @@ $ tree
 └── README.md
 
 ```
+
+protoc --proto_path=${GOPATH}/src:. --micro_out=. --go_out=. proto/user/user.proto
+
+
+
 
 ## 在 proto/user/user.proto中定义User原型
 
