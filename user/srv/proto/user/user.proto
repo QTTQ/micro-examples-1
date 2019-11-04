@@ -3,35 +3,35 @@ syntax = "proto3";
 package io.github.entere.srv.user;
 
 service User {
-	rpc Call(Request) returns (Response) {}
-	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
-	rpc PingPong(stream Ping) returns (stream Pong) {}
+    rpc QueryUserByID(QueryRequest) returns (QueryResponse) {}
 }
 
-message Message {
-	string say = 1;
+
+
+message UserInfo {
+   string user_id = 1;
+   string nickname = 2;
+   string mobile = 3;
+   string avatar_url = 4;
+   int32 gender = 5;
+   uint32 created_at = 6;
+   uint32 updated_at = 7;
+   // google.protobuf.Timestamp created_at = 6;
+   // google.protobuf.Timestamp updated_at = 7;
 }
 
-message Request {
-	string name = 1;
+message Error {
+   string msg = 1;
+   string info = 2;
 }
 
-message Response {
-	string msg = 1;
+message QueryRequest {
+   string user_id = 1;
+
 }
 
-message StreamingRequest {
-	int64 count = 1;
-}
-
-message StreamingResponse {
-	int64 count = 1;
-}
-
-message Ping {
-	int64 stroke = 1;
-}
-
-message Pong {
-	int64 stroke = 1;
+message QueryResponse {
+   uint32 code = 1;
+   Error error = 2;
+   UserInfo data = 3;
 }

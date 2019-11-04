@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/entere/micro-examples/user/srv/handler"
-	"github.com/entere/micro-examples/user/srv/subscriber"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 
@@ -21,12 +20,6 @@ func main() {
 
 	// Register Handler
 	user.RegisterUserHandler(service.Server(), new(handler.User))
-
-	// Register Struct as Subscriber
-	micro.RegisterSubscriber("io.github.entere.srv.user", service.Server(), new(subscriber.User))
-
-	// Register Function as Subscriber
-	micro.RegisterSubscriber("io.github.entere.srv.user", service.Server(), subscriber.Handler)
 
 	// Run service
 	if err := service.Run(); err != nil {

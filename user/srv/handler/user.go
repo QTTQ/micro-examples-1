@@ -3,46 +3,29 @@ package handler
 import (
 	"context"
 
-	"github.com/micro/go-micro/util/log"
-
 	user "github.com/entere/micro-examples/user/srv/proto/user"
 )
 
 type User struct{}
 
 // Call is a single request handler called via client.Call or the generated client code
-func (e *User) Call(ctx context.Context, req *user.Request, rsp *user.Response) error {
-	log.Log("Received User.Call request")
-	rsp.Msg = "Hello " + req.Name
-	return nil
-}
+func (e *User) QueryUserByID(ctx context.Context, req *user.QueryRequest, rsp *user.QueryResponse) error {
 
-// Stream is a server side stream handler called via client.Stream or the generated client code
-func (e *User) Stream(ctx context.Context, req *user.StreamingRequest, stream user.User_StreamStream) error {
-	log.Logf("Received User.Stream request with count: %d", req.Count)
-
-	for i := 0; i < int(req.Count); i++ {
-		log.Logf("Responding: %d", i)
-		if err := stream.Send(&user.StreamingResponse{
-			Count: int64(i),
-		}); err != nil {
-			return err
-		}
+	userID := req.UserId
+	if userID == "" {
+		userID = "xxxxxx"
 	}
+	// 模拟用户信息，TODO：从数据库中取出用户信息
+	userInfo := &user.UserInfo{
+		UserId:    userID,
+		Nickname:  "匿名",
+		Mobile:    "138********",
+		AvatarUrl: "avatar.jpg",
+		Gender:    1,
+	}
+	rsp.Code = 200
+	rsp.Error = nil
+	rsp.Data = userInfo
 
 	return nil
-}
-
-// PingPong is a bidirectional stream handler called via client.Stream or the generated client code
-func (e *User) PingPong(ctx context.Context, stream user.User_PingPongStream) error {
-	for {
-		req, err := stream.Recv()
-		if err != nil {
-			return err
-		}
-		log.Logf("Got ping %v", req.Stroke)
-		if err := stream.Send(&user.Pong{Stroke: req.Stroke}); err != nil {
-			return err
-		}
-	}
 }
