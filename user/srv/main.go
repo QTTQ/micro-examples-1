@@ -6,8 +6,6 @@ import (
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 
-
-
 	user "github.com/entere/micro-examples/user/srv/proto/user"
 )
 
@@ -22,7 +20,7 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	user.RegisterUserHandler(service.Server(), new(User))
+	user.RegisterUserHandler(service.Server(), new(handler.User))
 
 	// Register Struct as Subscriber
 	micro.RegisterSubscriber("io.github.entere.srv.user", service.Server(), new(subscriber.User))
