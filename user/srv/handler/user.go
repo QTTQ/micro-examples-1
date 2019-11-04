@@ -16,7 +16,7 @@ func (e *User) QueryUserByID(ctx context.Context, req *user.QueryRequest, rsp *u
 		userID = "xxxxxx"
 	}
 	// 模拟用户信息，TODO：从数据库中取出用户信息
-	userInfo := &user.UserInfo{
+	var userInfo = &user.UserInfo{
 		UserId:    userID,
 		Nickname:  "匿名",
 		Mobile:    "138********",
