@@ -78,16 +78,31 @@ micro list services
 
 ### 测试
 
+方式一：micro call 命令直接调用 srv 
+
 ```shell script
 micro call io.github.entere.srv.user User.Call '{"name":"entere"}'
 ```
-结果 
+结果:
 ```json
 {
     "msg": "Hello entere"
 }
 ```
 
+方式二：启用micao api 网关调用 srv
+
+```shell script
+micro api --handler=rpc --namespace=io.github.entere.srv
+curl http://localhost:8080/user/call?name=entere
+```
+
+结果:
+```json
+{
+    "msg": "Hello entere"
+}
+```
 
 ### 总结
 
