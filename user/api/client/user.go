@@ -1,11 +1,10 @@
 package client
 
 import (
-	"context"
+    "context"
 
-	user "github.com/entere/micro-examples/user/srv/proto/user"
-	"github.com/micro/go-micro"
-	"github.com/micro/go-micro/server"
+    user "github.com/entere/micro-examples/user/srv/proto/user"
+    "github.com/micro/go-micro/server"
 )
 
 type userKey struct{}

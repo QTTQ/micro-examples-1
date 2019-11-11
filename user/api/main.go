@@ -1,13 +1,11 @@
 package main
 
 import (
-	"github.com/micro/go-micro/util/log"
+    "github.com/micro/go-micro/util/log"
 
-	"github.com/entere/micro-examples/user/api/client"
-	"github.com/entere/micro-examples/user/api/handler"
-	"github.com/micro/go-micro"
-
-	user "github.com/entere/micro-examples/user/api/proto/user"
+    "github.com/entere/micro-examples/user/api/client"
+    "github.com/entere/micro-examples/user/api/handler"
+    user "github.com/entere/micro-examples/user/api/proto/user"
 )
 
 func main() {
