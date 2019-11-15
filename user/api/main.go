@@ -1,7 +1,8 @@
 package main
 
 import (
-    "github.com/micro/go-micro/util/log"
+	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/util/log"
 
     "github.com/entere/micro-examples/user/api/client"
     "github.com/entere/micro-examples/user/api/handler"

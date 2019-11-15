@@ -2,7 +2,8 @@ package main
 
 import (
     "github.com/entere/micro-examples/user/srv/handler"
-    "github.com/micro/go-micro/util/log"
+	"github.com/micro/go-micro"
+	"github.com/micro/go-micro/util/log"
 
     user "github.com/entere/micro-examples/user/srv/proto/user"
 )
