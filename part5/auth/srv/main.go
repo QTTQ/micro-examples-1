@@ -2,22 +2,33 @@ package main
 
 import (
 	"fmt"
-	handler2 "github.com/entere/micro-examples/part5/auth/srv/handler"
-	model2 "github.com/entere/micro-examples/part5/auth/srv/model"
-	"github.com/entere/micro-examples/part5/auth/srv/proto/auth"
-	basic2 "github.com/entere/micro-examples/part5/basic"
-	config2 "github.com/entere/micro-examples/part5/basic/config"
+	"github.com/entere/micro-examples/part5/auth/srv/handler"
+	"github.com/entere/micro-examples/part5/auth/srv/model"
+	auth "github.com/entere/micro-examples/part5/auth/srv/proto/auth"
+	"github.com/entere/micro-examples/part5/basic"
+	"github.com/entere/micro-examples/part5/basic/common"
+	"github.com/entere/micro-examples/part5/basic/config"
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-micro/registry/etcd"
+	"github.com/micro/go-plugins/config/source/grpc"
 
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/util/log"
 )
 
+var (
+	appName = "auth_srv"
+	cfg     = &authCfg{}
+)
+
+type authCfg struct {
+	common.AppCfg
+}
+
 func main() {
 	// 初始化配置、数据库等信息
-	basic2.Init()
+	initCfg()
 
 	// 使用etcd注册
 	micReg := etcd.NewRegistry(registryOptions)
@@ -33,14 +44,14 @@ func main() {
 	service.Init(
 		micro.Action(func(c *cli.Context) {
 			// 初始化handler
-			model2.Init()
+			model.Init()
 			// 初始化handler
-			handler2.Init()
+			handler.Init()
 		}),
 	)
 
 	// 注册服务
-	io_github_entere_srv_auth.RegisterAuthServiceHandler(service.Server(), new(handler2.Service))
+	auth.RegisterAuthServiceHandler(service.Server(), new(handler.Service))
 
 	// 启动服务
 	if err := service.Run(); err != nil {
@@ -49,6 +60,29 @@ func main() {
 }
 
 func registryOptions(ops *registry.Options) {
-	etcdCfg := config2.GetEtcdConfig()
-	ops.Addrs = []string{fmt.Sprintf("%s:%d", etcdCfg.GetHost(), etcdCfg.GetPort())}
+	etcdCfg := &common.Etcd{}
+	err := config.C().App("etcd", etcdCfg)
+	if err != nil {
+		panic(err)
+	}
+
+	ops.Addrs = []string{fmt.Sprintf("%s:%d", etcdCfg.Host, etcdCfg.Port)}
+}
+
+func initCfg() {
+	source := grpc.NewSource(
+		grpc.WithAddress("127.0.0.1:9600"),
+		grpc.WithPath("micro"),
+	)
+
+	basic.Init(config.WithSource(source))
+
+	err := config.C().App(appName, cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Logf("[initCfg] 配置，cfg：%v", cfg)
+
+	return
 }

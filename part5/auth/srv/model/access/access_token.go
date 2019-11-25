@@ -2,7 +2,6 @@ package access
 
 import (
 	"fmt"
-	config2 "github.com/entere/micro-examples/part5/basic/config"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -12,12 +11,12 @@ import (
 
 var (
 	// tokenExpiredDate app token过期日期 30天
-	tokenExpiredDate = time.Duration(3600*24*30) * time.Second
+	tokenExpiredDate = 3600 * 24 * 30 * time.Second
 
 	// tokenIDKeyPrefix tokenID 前缀
 	tokenIDKeyPrefix = "token:auth:id:"
 
-	tokenExpiredTopic = "mu.micro.book.topic.auth.tokenExpired"
+	tokenExpiredTopic = "io.github.entere.topic.auth.tokenExpired"
 )
 
 // Subject token 持有者
@@ -35,7 +34,7 @@ func (s *service) MakeAccessToken(subject *Subject) (ret string, err error) {
 
 	// 创建
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, m)
-	ret, err = token.SignedString([]byte(config2.GetJwtConfig().GetSecretKey()))
+	ret, err = token.SignedString([]byte(cfg.SecretKey))
 	if err != nil {
 		return "", fmt.Errorf("[MakeAccessToken] 创建token失败，err: %s", err)
 	}

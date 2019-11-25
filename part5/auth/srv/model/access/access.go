@@ -2,16 +2,20 @@ package access
 
 import (
 	"fmt"
-	redis2 "github.com/entere/micro-examples/part5/basic/redis"
+	"github.com/entere/micro-examples/part5/basic/config"
+	"github.com/entere/micro-examples/part5/plugins/jwt"
+	"github.com/entere/micro-examples/part5/plugins/redis"
+	"github.com/micro/go-micro/util/log"
 	"sync"
 
 	r "github.com/go-redis/redis"
 )
 
 var (
-	s  *service
-	ca *r.Client
-	m  sync.RWMutex
+	s   *service
+	ca  *r.Client
+	m   sync.RWMutex
+	cfg = &jwt.Jwt{}
 )
 
 // service 服务
@@ -47,8 +51,14 @@ func Init() {
 		return
 	}
 
-	ca = redis2.GetRedis()
-	fmt.Println(ca)
+	err := config.C().App("jwt", cfg)
+	if err != nil {
+		panic(err)
+	}
+
+	log.Logf("[initCfg] 配置，cfg：%v", cfg)
+
+	ca = redis.Redis()
 
 	s = &service{}
 }

@@ -1,7 +1,7 @@
 package user
 
 import (
-	"github.com/entere/micro-examples/part5/basic/db"
+	"github.com/entere/micro-examples/part5/plugins/db"
 	proto "github.com/entere/micro-examples/part5/user/srv/proto/user"
 	"github.com/micro/go-micro/util/log"
 )

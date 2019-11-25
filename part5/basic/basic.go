@@ -1,13 +1,29 @@
 package basic
 
-import (
-	config2 "github.com/entere/micro-examples/part5/basic/config"
-	db2 "github.com/entere/micro-examples/part5/basic/db"
-	redis2 "github.com/entere/micro-examples/part5/basic/redis"
+import "github.com/entere/micro-examples/part5/basic/config"
+
+var (
+	pluginFuncs []func()
 )
 
-func Init() {
-	config2.Init()
-	db2.Init()
-	redis2.Init()
+type Options struct {
+	EnableDB    bool
+	EnableRedis bool
+	cfgOps      []config.Option
+}
+
+type Option func(o *Options)
+
+func Init(opts ...config.Option) {
+	// 初始化配置
+	config.Init(opts...)
+
+	// 加载依赖配置的插件
+	for _, f := range pluginFuncs {
+		f()
+	}
+}
+
+func Register(f func()) {
+	pluginFuncs = append(pluginFuncs, f)
 }

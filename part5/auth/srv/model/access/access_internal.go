@@ -2,7 +2,7 @@ package access
 
 import (
 	"fmt"
-	config2 "github.com/entere/micro-examples/part5/basic/config"
+
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -26,13 +26,7 @@ func (s *service) createTokenClaims(subject *Subject) (m *jwt.StandardClaims, er
 // saveTokenToCache 保存token到缓存
 func (s *service) saveTokenToCache(subject *Subject, val string) (err error) {
 	//保存
-	fmt.Println(tokenIDKeyPrefix + subject.ID)
-	fmt.Println(val)
-	fmt.Println(tokenExpiredDate)
-	fmt.Println(ca)
-
-	err = ca.Set(tokenIDKeyPrefix+subject.ID, val, tokenExpiredDate).Err()
-	if err != nil {
+	if err = ca.Set(tokenIDKeyPrefix+subject.ID, val, tokenExpiredDate).Err(); err != nil {
 		return fmt.Errorf("[saveTokenToCache] 保存token到缓存发生错误，err:" + err.Error())
 	}
 	return
@@ -65,7 +59,7 @@ func (s *service) parseToken(tk string) (c *jwt.StandardClaims, err error) {
 		if !ok {
 			return nil, fmt.Errorf("不合法的token格式: %v", token.Header["alg"])
 		}
-		return []byte(config2.GetJwtConfig().GetSecretKey()), nil
+		return []byte(cfg.SecretKey), nil
 	})
 
 	// jwt 框架自带了一些检测，如过期，发布者错误等

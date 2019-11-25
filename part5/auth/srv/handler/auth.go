@@ -2,21 +2,21 @@ package handler
 
 import (
 	"context"
-	access2 "github.com/entere/micro-examples/part5/auth/srv/model/access"
-	"github.com/entere/micro-examples/part5/auth/srv/proto/auth"
+	"github.com/entere/micro-examples/part5/auth/srv/model/access"
+	auth "github.com/entere/micro-examples/part5/auth/srv/proto/auth"
 	"strconv"
 
 	"github.com/micro/go-micro/util/log"
 )
 
 var (
-	accessService access2.Service
+	accessService access.Service
 )
 
 // Init 初始化handler
 func Init() {
 	var err error
-	accessService, err = access2.GetService()
+	accessService, err = access.GetService()
 	if err != nil {
 		log.Fatal("[Init] 初始化Handler错误，%s", err)
 		return
@@ -26,15 +26,15 @@ func Init() {
 type Service struct{}
 
 // MakeAccessToken 生成token
-func (s *Service) MakeAccessToken(ctx context.Context, req *io_github_entere_srv_auth.Request, rsp *io_github_entere_srv_auth.Response) error {
+func (s *Service) MakeAccessToken(ctx context.Context, req *auth.Request, rsp *auth.Response) error {
 	log.Log("[MakeAccessToken] 收到创建token请求")
 
-	token, err := accessService.MakeAccessToken(&access2.Subject{
+	token, err := accessService.MakeAccessToken(&access.Subject{
 		ID:   strconv.FormatUint(req.UserId, 10),
 		Name: req.UserName,
 	})
 	if err != nil {
-		rsp.Error = &io_github_entere_srv_auth.Error{
+		rsp.Error = &auth.Error{
 			Detail: err.Error(),
 		}
 
@@ -47,11 +47,11 @@ func (s *Service) MakeAccessToken(ctx context.Context, req *io_github_entere_srv
 }
 
 // DelUserAccessToken 清除用户token
-func (s *Service) DelUserAccessToken(ctx context.Context, req *io_github_entere_srv_auth.Request, rsp *io_github_entere_srv_auth.Response) error {
+func (s *Service) DelUserAccessToken(ctx context.Context, req *auth.Request, rsp *auth.Response) error {
 	log.Log("[DelUserAccessToken] 清除用户token")
 	err := accessService.DelUserAccessToken(req.Token)
 	if err != nil {
-		rsp.Error = &io_github_entere_srv_auth.Error{
+		rsp.Error = &auth.Error{
 			Detail: err.Error(),
 		}
 
