@@ -1,8 +1,4 @@
 micro:
-  auth_srv:
-    name: io.github.entere.srv.auth
-    address: 127.0.0.1
-    port: 9030
   etcd:
     enabled: true
     host: 127.0.0.1
@@ -13,8 +9,14 @@ micro:
       url: root:123456@(127.0.0.1:3306)/micro_user_mod?charset=utf8&parseTime=true&loc=Asia%2FShanghai
       maxIdleConnection: 100
       maxOpenConnection: 130
+  db_micro_user_mod:
+    mysql:
+      enabled: true
+      url: root:123456@(127.0.0.1:3306)/micro_user_mod?charset=utf8&parseTime=true&loc=Asia%2FShanghai
+      maxIdleConnection: 100
+      maxOpenConnection: 130
   jwt:
-    secretKey: W6VjDud2W1kMG3BicbMNlGgI4ZfcoHtMGLWr
+    secretKey: XsX20LwAEeUQpCcXcmbzt0yI0x0sObUQ
   redis:
     enabled: true
     conn: 127.0.0.1:6379
@@ -25,6 +27,10 @@ micro:
       enabled: false
       master: codeislandMaster
       nodes: 127.0.0.1:16379,127.0.0.1:26379,127.0.0.1:36379
+  auth_srv:
+    name: io.github.entere.srv.auth
+    address: 127.0.0.1
+    port: 9030
   user_srv:
     name: io.github.entere.srv.user
     address: 127.0.0.1

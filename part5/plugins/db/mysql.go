@@ -24,7 +24,7 @@ func initMysql() {
 	c := config.C()
 	cfg := &db{}
 
-	err := c.App("db", cfg)
+	err := c.App("db_micro_user_mod", cfg)
 	if err != nil {
 		log.Logf("[initMysql] %s", err)
 	}

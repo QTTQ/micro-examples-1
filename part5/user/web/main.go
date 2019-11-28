@@ -8,6 +8,7 @@ import (
 	"github.com/micro/cli"
 	"github.com/micro/go-micro/registry"
 	"github.com/micro/go-plugins/config/source/grpc"
+	"net/http"
 
 	"github.com/micro/go-micro/registry/etcd"
 	"github.com/micro/go-micro/util/log"
@@ -47,8 +48,13 @@ func main() {
 	}
 
 	// register html handler
+
 	service.HandleFunc("/user/login", handler.Login)
 	service.HandleFunc("/user/logout", handler.Logout)
+	// service.HandleFunc("/user/info", handler.Info)
+
+	infoHandler := http.HandlerFunc(handler.Info)
+	service.Handle("/user/info", handler.JWTAuthWrapper(infoHandler))
 
 	// register call handler
 	// service.HandleFunc("/user/call", handler.UserCall)

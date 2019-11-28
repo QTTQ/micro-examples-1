@@ -80,7 +80,7 @@ func Init() {
 	config.Get(defaultRootPath, "etcd").Scan(&etcdConfig)
 	config.Get(defaultRootPath, "mysql").Scan(&mysqlConfig)
 	config.Get(defaultRootPath, "redis").Scan(&redisConfig)
-	config.Get(defaultRootPath, "jwt").Scan(&jwtConfig)
+	config.Get(defaultRootPath, "token").Scan(&jwtConfig)
 
 	// 标记已经初始化
 	inited = true

@@ -62,7 +62,7 @@ func (s *service) parseToken(tk string) (c *jwt.StandardClaims, err error) {
 		return []byte(cfg.SecretKey), nil
 	})
 
-	// jwt 框架自带了一些检测，如过期，发布者错误等
+	// token 框架自带了一些检测，如过期，发布者错误等
 	if err != nil {
 		switch e := err.(type) {
 		case *jwt.ValidationError:

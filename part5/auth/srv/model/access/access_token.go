@@ -87,3 +87,15 @@ func (s *service) DelUserAccessToken(tk string) (err error) {
 
 	return
 }
+
+func (s *service) ParseToken(tk string) (c *jwt.StandardClaims, err error) {
+	// 解析token字符串
+	claims, err := s.parseToken(tk)
+	if err != nil {
+		return nil, fmt.Errorf("[DelUserAccessToken] 错误的token，err: %s", err)
+	}
+
+	log.Log(claims.Id)
+
+	return claims, nil
+}

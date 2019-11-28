@@ -19,6 +19,8 @@ type service struct {
 type Service interface {
 	// QueryUserByName 根据用户名获取用户
 	QueryUserByName(userName string) (ret *proto.User, err error)
+
+	QueryUserByID(userID string) (ret *proto.User, err error)
 }
 
 // GetService 获取服务类

@@ -62,6 +62,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), 500)
 			return
 		}
+
+		// 开始 token生成
+
+		// 结束 token生成
+
 		response["token"] = rsp2.Token
 		w.Header().Add("set-cookie", "application/json; charset=utf-8")
 		expire := time.Now().Add(30 * time.Minute)
@@ -125,4 +130,34 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+}
+
+func Info(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != "POST" {
+		log.Logf("非法请求")
+		http.Error(w, "非法请求", 400)
+		return
+	}
+	r.ParseForm()
+
+	rsp, err := userClient.QueryUserByID(context.TODO(), &user.Request{
+		UserID: r.Form.Get("userID"),
+	})
+	log.Log(rsp)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+	}
+	// rsp.User.Pwd = ""
+	response := map[string]interface{}{
+		"ref":  time.Now().UnixNano(),
+		"data": rsp.User,
+	}
+	// 返回JSON结构
+	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
 }

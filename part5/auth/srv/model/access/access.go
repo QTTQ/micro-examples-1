@@ -32,6 +32,7 @@ type Service interface {
 
 	// DelUserAccessToken 清除用户token
 	DelUserAccessToken(token string) (err error)
+	// ParseToken(token string) (err error)
 }
 
 // GetService 获取服务类
@@ -51,7 +52,7 @@ func Init() {
 		return
 	}
 
-	err := config.C().App("jwt", cfg)
+	err := config.C().App("token", cfg)
 	if err != nil {
 		panic(err)
 	}

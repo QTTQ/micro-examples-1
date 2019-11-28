@@ -17,3 +17,15 @@ func (s *service) QueryUserByName(userName string) (ret *proto.User, err error) 
 	}
 	return
 }
+
+func (s *service) QueryUserByID(userID string) (ret *proto.User, err error) {
+	queryString := `SELECT user_id,login_name FROM auth_passwords WHERE user_id = ?`
+	o := db.GetDB()
+	ret = &proto.User{}
+	err = o.QueryRow(queryString, userID).Scan(&ret.Id, &ret.Name)
+	if err != nil {
+		log.Logf("[QueryUserByID] 查询数据失败，err：%s", err)
+		return
+	}
+	return
+}
