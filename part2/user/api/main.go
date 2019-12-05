@@ -11,7 +11,7 @@ import (
 func main() {
 	// New Service
 	service := micro.NewService(
-		micro.Name("io.github.entere.api.user"),
+		micro.Name("io.github.entere.api.student"),
 		micro.Version("latest"),
 	)
 

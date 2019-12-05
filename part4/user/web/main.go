@@ -19,7 +19,7 @@ func main() {
 	micReg := etcd.NewRegistry(registryOptions)
 	// create new web service
 	service := web.NewService(
-		web.Name("io.github.entere.web.user"),
+		web.Name("io.github.entere.web.student"),
 		web.Version("latest"),
 		web.Registry(micReg),
 		web.Address(":8088"),
@@ -36,11 +36,11 @@ func main() {
 	}
 
 	// register html handler
-	service.HandleFunc("/user/login", handler.Login)
-	service.HandleFunc("/user/logout", handler.Logout)
+	service.HandleFunc("/student/login", handler.Login)
+	service.HandleFunc("/student/logout", handler.Logout)
 
 	// register call handler
-	// service.HandleFunc("/user/call", handler.UserCall)
+	// service.HandleFunc("/student/call", handler.UserCall)
 
 	// run service
 	if err := service.Run(); err != nil {

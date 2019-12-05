@@ -23,14 +23,14 @@ func extractValue(pair *api.Pair) string {
 	return pair.Values[0]
 }
 
-// User.Info is called by the API as /user/call with post body {"name": "foo"}
+// User.Info is called by the API as /student/call with post body {"name": "foo"}
 func (e *User) Info(ctx context.Context, req *api.Request, rsp *api.Response) error {
 	log.Log("Received User.Info request")
 
 	// extract the client from the context
 	userClient, ok := client2.UserFromContext(ctx)
 	if !ok {
-		return errors.InternalServerError("io.github.entere.api.user.user.info", "user client not found")
+		return errors.InternalServerError("io.github.entere.api.student.student.info", "student client not found")
 	}
 
 	// make request
@@ -38,7 +38,7 @@ func (e *User) Info(ctx context.Context, req *api.Request, rsp *api.Response) er
 		UserId: extractValue(req.Post["user_id"]),
 	})
 	if err != nil {
-		return errors.InternalServerError("io.github.entere.api.user.user.info", err.Error())
+		return errors.InternalServerError("io.github.entere.api.student.student.info", err.Error())
 	}
 
 	b, _ := json.Marshal(response)

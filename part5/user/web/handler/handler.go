@@ -19,7 +19,7 @@ var (
 )
 
 func Init() {
-	userClient = user.NewUserService("io.github.entere.srv.user", client.DefaultClient)
+	userClient = user.NewUserService("io.github.entere.srv.student", client.DefaultClient)
 	authClient = auth.NewAuthService("io.github.entere.srv.auth", client.DefaultClient)
 
 }

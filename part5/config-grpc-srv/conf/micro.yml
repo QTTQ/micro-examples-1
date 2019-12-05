@@ -32,10 +32,10 @@ micro:
     address: 127.0.0.1
     port: 9030
   user_srv:
-    name: io.github.entere.srv.user
+    name: io.github.entere.srv.student
     address: 127.0.0.1
     port: 9090
   user_web:
-    name: io.github.entere.web.user
+    name: io.github.entere.web.student
     address: 127.0.0.1
     port: 10000

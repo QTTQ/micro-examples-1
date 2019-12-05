@@ -23,7 +23,7 @@ type userCfg struct {
 }
 
 var (
-	appName = "user-srv"
+	appName = "student-srv"
 	cfg     = &userCfg{}
 )
 
@@ -32,7 +32,7 @@ func main() {
 	microReg := etcd.NewRegistry(registryOptions)
 	// New Service
 	service := micro.NewService(
-		micro.Name("io.github.entere.srv.user"),
+		micro.Name("io.github.entere.srv.student"),
 		micro.Version("latest"),
 		micro.Registry(microReg),
 	)
@@ -47,10 +47,10 @@ func main() {
 	s.RegisterUserHandler(service.Server(), new(handler.Service))
 
 	// Register Struct as Subscriber
-	// micro.RegisterSubscriber("io.github.entere.srv.user", service.Server(), new(subscriber.User))
+	// micro.RegisterSubscriber("io.github.entere.srv.student", service.Server(), new(subscriber.User))
 
 	// Register Function as Subscriber
-	// micro.RegisterSubscriber("io.github.entere.srv.user", service.Server(), subscriber.Handler)
+	// micro.RegisterSubscriber("io.github.entere.srv.student", service.Server(), subscriber.Handler)
 
 	// Run service
 	if err := service.Run(); err != nil {

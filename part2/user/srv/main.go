@@ -10,7 +10,7 @@ import (
 func main() {
 	// New Service
 	service := micro.NewService(
-		micro.Name("io.github.entere.srv.user"),
+		micro.Name("io.github.entere.srv.student"),
 		micro.Version("latest"),
 	)
 

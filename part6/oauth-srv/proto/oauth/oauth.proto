@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package io.github.entere.srv.oauth;
+
+service Oauth {
+	rpc LoginByPassword(LoginRequest) returns (LoginResponse) {}
+
+}
+
+
+
+message LoginRequest {
+	string loginName = 1;
+	string loginPwd = 2;
+}
+
+message LoginResponse {
+	Error error = 1;
+	LoginData data = 2;
+}
+
+
+message LoginData {
+	string userID = 1;
+	string loginName = 2;
+	string loginPwd = 3;
+	string token = 4;
+}
+
+
+message Error{
+	int32 code = 1;
+	string msg = 2;
+}
+
+

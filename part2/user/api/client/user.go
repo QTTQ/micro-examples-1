@@ -18,7 +18,7 @@ func UserFromContext(ctx context.Context) (io_github_entere_srv_user.UserService
 
 // Client returns a wrapper for the UserClient
 func UserWrapper(service micro.Service) server.HandlerWrapper {
-	client := io_github_entere_srv_user.NewUserService("io.github.entere.srv.user", service.Client())
+	client := io_github_entere_srv_user.NewUserService("io.github.entere.srv.student", service.Client())
 
 	return func(fn server.HandlerFunc) server.HandlerFunc {
 		return func(ctx context.Context, req server.Request, rsp interface{}) error {
