@@ -35,6 +35,7 @@ func JWTAuthWrapper(h http.Handler) http.Handler {
 		}
 		log.Log(cc)
 		log.Logf("token:" + tk)
+		w.Header().Add("uid", cc.UserID)
 		h.ServeHTTP(w, r)
 	})
 }

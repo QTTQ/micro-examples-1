@@ -26,6 +26,7 @@ func QueryUserByName(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
+	log.Info(w.Header())
 
 	// call the backend service
 
